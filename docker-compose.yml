@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+  db:
+    build:
+      context: src/main/docker/postgres
+    container_name: local_db
+    ports:
+      - "5432:5432"
+
+  pgadmin_db:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    container_name: pgadmin_local_db
+    links:
+      - db
+    depends_on:
+      - db
+    ports:
+      - "8084:80"

@@ -1,0 +1,271 @@
+{
+	"info": {
+		"_postman_id": "caa63e07-6742-4361-97ec-41df99d6749e",
+		"name": "crm-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17296957"
+	},
+	"item": [
+		{
+			"name": "Get token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"username\": \"{{default-username}}\",\n  \"password\": \"{{default-password}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{crm-api-host}}/v1/auth/token",
+					"host": [
+						"{{crm-api-host}}"
+					],
+					"path": [
+						"v1",
+						"auth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all customers",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const postRequest = {",
+							"  url: pm.collectionVariables.get('crm-api-host') + '/v1/auth/token',",
+							"  method: 'POST',",
+							"  header: {",
+							"    \"Content-Type\": \"application/json\"",
+							"  },",
+							"  body: {",
+							"    mode: 'application/json',",
+							"    raw: JSON.stringify(",
+							"        {",
+							"            username: pm.collectionVariables.get('default-username'),",
+							"            password: pm.collectionVariables.get('default-password')",
+							"        }",
+							"    )",
+							"  }",
+							"};",
+							"console.log(postRequest);",
+							"pm.sendRequest(postRequest, function (err, res) {",
+							"    var responseJson = res.json();",
+							"    console.log(responseJson);",
+							"    pm.collectionVariables.set('crm-api-token', responseJson['token']);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{crm-api-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{crm-api-host}}/v1/customers",
+					"host": [
+						"{{crm-api-host}}"
+					],
+					"path": [
+						"v1",
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a customer",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const postRequest = {",
+							"  url: pm.collectionVariables.get('crm-api-host') + '/v1/auth/token',",
+							"  method: 'POST',",
+							"  header: {",
+							"    \"Content-Type\": \"application/json\"",
+							"  },",
+							"  body: {",
+							"    mode: 'application/json',",
+							"    raw: JSON.stringify(",
+							"        {",
+							"            username: pm.collectionVariables.get('default-username'),",
+							"            password: pm.collectionVariables.get('default-password')",
+							"        }",
+							"    )",
+							"  }",
+							"};",
+							"console.log(postRequest);",
+							"pm.sendRequest(postRequest, function (err, res) {",
+							"    var responseJson = res.json();",
+							"    console.log(responseJson);",
+							"    pm.collectionVariables.set('crm-api-token', responseJson['token']);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{crm-api-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{crm-api-host}}/v1/customers/f8b0b153-dea6-457a-93b5-3fb7ca600659",
+					"host": [
+						"{{crm-api-host}}"
+					],
+					"path": [
+						"v1",
+						"customers",
+						"f8b0b153-dea6-457a-93b5-3fb7ca600659"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a customer",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const postRequest = {",
+							"  url: pm.collectionVariables.get('crm-api-host') + '/v1/auth/token',",
+							"  method: 'POST',",
+							"  header: {",
+							"    \"Content-Type\": \"application/json\"",
+							"  },",
+							"  body: {",
+							"    mode: 'application/json',",
+							"    raw: JSON.stringify(",
+							"        {",
+							"            username: pm.collectionVariables.get('default-username'),",
+							"            password: pm.collectionVariables.get('default-password')",
+							"        }",
+							"    )",
+							"  }",
+							"};",
+							"console.log(postRequest);",
+							"pm.sendRequest(postRequest, function (err, res) {",
+							"    var responseJson = res.json();",
+							"    console.log(responseJson);",
+							"    pm.collectionVariables.set('crm-api-token', responseJson['token']);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{crm-api-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"aCustomer\",\n  \"surname\": \"aCustomerSurname\",\n  \"profileImageUrl\" : \"someImageUrl\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{crm-api-host}}/v1/customers/create",
+					"host": [
+						"{{crm-api-host}}"
+					],
+					"path": [
+						"v1",
+						"customers",
+						"create"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "crm-api-token",
+			"value": "jwttoken",
+			"type": "string"
+		},
+		{
+			"key": "crm-api-host",
+			"value": "http://localhost:8080/api",
+			"type": "string"
+		},
+		{
+			"key": "default-username",
+			"value": "user1@email.com",
+			"type": "string"
+		},
+		{
+			"key": "default-password",
+			"value": "secretPassword1",
+			"type": "string"
+		}
+	]
+}

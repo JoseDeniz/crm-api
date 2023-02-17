@@ -1,0 +1,28 @@
+### POST /api/v1/auth/token
+POST {{host}}/v1/auth/token
+Content-Type: application/json
+
+{
+  "username": "user1@email.com",
+  "password": "secretPassword1"
+}
+> {% client.global.set("auth_token", response.body.token); %}
+
+### POST /api/v1/customers/create
+POST {{host}}/v1/customers/create
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "name": "aCustomer",
+  "surname": "aCustomerSurname",
+  "profileImageUrl" : "someImageUrl"
+}
+
+### GET /api/v1/customers
+GET {{host}}/v1/customers
+Authorization: Bearer {{auth_token}}
+
+### GET /api/v1/customers/{id}
+GET {{host}}/v1/customers/48e1305f-3daa-490c-a739-4b703ea09c9a
+Authorization: Bearer {{auth_token}}
