@@ -20,14 +20,18 @@ public class UserService {
     }
 
     public String save(CreateUserRequest createUserRequest) {
+        var persistedUser = userRepository.findByUsername(createUserRequest.username());
+        if (persistedUser != null) {
+            throw new UserAlreadyExistsException();
+        }
         var newUserId = UUID.randomUUID().toString();
         this.userRepository.save(
                 new User(
-                    newUserId,
-                    createUserRequest.username(),
-                    passwordEncoder.encode(createUserRequest.password()),
-                    true,
-                    createUserRequest.roles()
+                        newUserId,
+                        createUserRequest.username(),
+                        passwordEncoder.encode(createUserRequest.password()),
+                        true,
+                        createUserRequest.roles()
                 )
         );
         return newUserId;
