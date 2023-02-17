@@ -6,6 +6,8 @@ import com.crm.persistence.orm.entity.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public class ORMUserRepository implements UserRepository {
 
@@ -28,14 +30,17 @@ public class ORMUserRepository implements UserRepository {
     }
 
     @Override
-    public User findByUsername(String username) {
-        var user = userRepository.findByUsername(username).orElseThrow();
-        return new User(
-            user.getId(),
-            user.getUsername(),
-            user.getPassword(),
-            user.getIsEnabled(),
-            user.getRoles().stream().map(UserRole::getValue).toArray(String[]::new)
-        );
+    public Optional<User> findByUsername(String username) {
+        var user = userRepository.findByUsername(username);
+        if (user.isPresent()) {
+            return user.map(persistedUser -> new User(
+                persistedUser.getId(),
+                persistedUser.getUsername(),
+                persistedUser.getPassword(),
+                persistedUser.getIsEnabled(),
+                persistedUser.getRoles().stream().map(UserRole::getValue).toArray(String[]::new)
+            ));
+        }
+        return Optional.empty();
     }
 }

@@ -2,8 +2,10 @@ package com.crm.domain.repositories;
 
 import com.crm.domain.entity.User;
 
+import java.util.Optional;
+
 public interface UserRepository {
     void save(User user);
 
-    User findByUsername(String username);
+    Optional<User> findByUsername(String username);
 }

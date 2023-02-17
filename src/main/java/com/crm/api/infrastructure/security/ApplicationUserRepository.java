@@ -20,13 +20,16 @@ public class ApplicationUserRepository {
 
     public ApplicationUser findByUsername(String username) {
         var user = userRepository.findByUsername(username);
-        return new JwtUser(
-                user.getId(),
-                user.getUsername(),
-                user.getPassword(),
-                mapToGrantedAuthorities(user.getRoles()),
-                user.isEnabled()
-        );
+        if (user.isPresent()) {
+            return user.map(persistedUser -> new JwtUser(
+                    persistedUser.getId(),
+                    persistedUser.getUsername(),
+                    persistedUser.getPassword(),
+                    mapToGrantedAuthorities(persistedUser.getRoles()),
+                    persistedUser.isEnabled()
+            )).get();
+        }
+        return null;
     }
 
     private static List<GrantedAuthority> mapToGrantedAuthorities(String[] roles) {
