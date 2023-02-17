@@ -1,5 +1,5 @@
 # CRM API
-
+[![CI](https://github.com/JoseDeniz/crm-api/actions/workflows/main.yml/badge.svg)](https://github.com/JoseDeniz/crm-api/actions/workflows/main.yml)
 ### Technologies
 
   - JDK 17
