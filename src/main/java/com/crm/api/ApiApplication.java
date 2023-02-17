@@ -28,10 +28,14 @@ public class ApiApplication {
 		var adminUser = new CreateUserRequest(adminUsername, "adminSecretPassword", UserRole.ADMIN.getValue());
 		var user2Username = "user1@email.com";
 		var user2 = new CreateUserRequest(user2Username, "secretPassword1", UserRole.USER.getValue());
-		userService.save(adminUser);
-		userService.save(user2);
+		try {
+			userService.save(adminUser);
+			userService.save(user2);
 
-		customerService.save(new CreateCustomerRequest("Customer1", "Surname1", "anyProfileImage1"), adminUsername);
-		customerService.save(new CreateCustomerRequest("Customer2", "Surname2", "anyProfileImage2"), user2Username);
+			customerService.save(new CreateCustomerRequest("Customer1", "Surname1", "anyProfileImage1"), adminUsername);
+			customerService.save(new CreateCustomerRequest("Customer2", "Surname2", "anyProfileImage2"), user2Username);
+		} catch (Exception e) {
+			// empty, just a db fixture
+		}
 	}
 }
