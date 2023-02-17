@@ -24,6 +24,8 @@
 #### Run tests
 Tests are located under _test_ folder
 
+```./mvnw clean && ./mvnw test```
+
 ### How to use
 
 #### Option 1. Http Client | IntelliJ (Ultimate version only)
